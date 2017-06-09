@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TestPlayer</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_internet_container">InternetContainer</string>
+    <string name="title_activity_RegisterForm">RegisterForm</string>
+    <string name="google">http://www.google.com</string>
+    <string name="consent">I agree to T &amp;C for the site and i confirm to use my identity to verify myself</string>
+</resources>

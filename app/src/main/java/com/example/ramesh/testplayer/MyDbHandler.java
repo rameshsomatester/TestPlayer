@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
+import android.util.Log;
 
 /**
  * Created by Ramesh on 03-06-2017.
@@ -25,12 +27,13 @@ public class MyDbHandler extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String Query ="INSERT TABLE "+TABLE_USERS+"("+
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT " +
-                COLUMN_Username+ " TEXT " +
+        String query ="CREATE TABLE "+TABLE_USERS+" ( "+
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
+                COLUMN_Username+ " TEXT , " +
                 COLUMN_Password+ " TEXT " +
-                ");";
-        db.execSQL(Query);
+                " );";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) db.validateSql(query,null);
+        db.execSQL(query);
     }
 
     @Override
@@ -44,29 +47,55 @@ public class MyDbHandler extends SQLiteOpenHelper{
         values.put(COLUMN_Username,RegisterForm.getUserName());
         values.put(COLUMN_Password,RegisterForm.getPassword());
         SQLiteDatabase db = getWritableDatabase();
-                db.insert(TABLE_USERS,null,values);
+        db.insert(TABLE_USERS,null,values);
         db.close();
 
     }
     //delete user from table
     public void DeleteUser(String username){
-       SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM "+TABLE_USERS+" WHERE "+COLUMN_Username+"=\""+username+"\"" );
         db.close();
     }
     //Admin can view list of users and manage
     public String viewusers(){
         String viewdata = " ";
-        SQLiteDatabase db = getReadableDatabase();
-        String Query = "SELECT * FROM "+TABLE_USERS+" WHERE 1";
-        Cursor c=db.rawQuery(Query, null);
-        c.moveToFirst();
-        while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("username"))!=null){
-                viewdata += c.getString(c.getColumnIndex("username"));
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM "+TABLE_USERS;
+        Cursor c=db.rawQuery(query, null);
+     /*   if(c.moveToFirst()) {
+            Log.d("DbHandler", " count" + c.getCount() + " " + c.getColumnName(0));
+            Log.d("DbHandler", " column name" + c.getString(c.getColumnIndex("_id")));
+            for(int i =0 ;i<c.getColumnNames().length;i++){
+                Log.d("DbHandler"," columnames "+i+ " "+c.getColumnName(i));
+            }
+
+            if (c.getString(c.getColumnIndex("Username")) != null) {
+                viewdata += c.getString(c.getColumnIndex("Username"));
+                viewdata += "\n";
+
+            }
+        }*/
+        //Log.d("DbHandler", " viewData" + viewdata);
+      c.moveToFirst();
+       /* while(c.isAfterLast()){
+             if(c.getString(c.getColumnIndex("_id"))!=null){
+                viewdata += c.getString(c.getColumnIndex("Username"));
                 viewdata += "\n";
             }
+        }*/
+
+        //c.moveToFirst();
+        if (c != null) {
+            do {
+                for (int i = 0; i < c.getColumnCount(); i++) {
+                    viewdata += c.getString(c.getColumnIndex("Username"));
+                    viewdata += "\n";
+                    Log.e("", "" + c.getString(i));
+                }
+            }while (c.moveToNext());
         }
+    //    }
         db.close();
         return viewdata;
     }

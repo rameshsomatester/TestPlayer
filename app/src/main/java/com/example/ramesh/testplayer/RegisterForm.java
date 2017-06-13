@@ -20,7 +20,7 @@ public class RegisterForm extends AppCompatActivity {
     private String UserName;
     private String password;
     private String viewusers;
-    TextView password_diasspear,confirmation;
+    TextView confirmation;
     EditText Username,Password;
     Button Register;
     CheckBox agree;
@@ -34,29 +34,16 @@ public class RegisterForm extends AppCompatActivity {
         setContentView(R.layout.register_form);
         Username = (EditText) findViewById(R.id.EditUSer);
         Password = (EditText) findViewById(R.id.Password);
-        password_diasspear = (TextView) findViewById((R.id.TV_password));
         Register = (Button) findViewById(R.id.Register_btn);
         confirmation = (TextView) findViewById(R.id.Confirmation);
         agree = (CheckBox) findViewById(R.id.checkBox);
         dbHandler = new MyDbHandler(this, null, null, 1);
-        Username.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Username.setText("");
-            }
-        });
-        Password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                password_diasspear.setVisibility(View.GONE);
-            }
-        });
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RegisterForm test = new RegisterForm(Username.getText().toString(), Password.getText().toString());
                 dbHandler.addUser(test);
-                confirmation.setText(" Gracious " + Username + " is added successfully to the system");
+                confirmation.setText(" Gracious " + Username.getText().toString() + " is added successfully to the system");
             }
         });
         Register.setOnLongClickListener(new View.OnLongClickListener() {

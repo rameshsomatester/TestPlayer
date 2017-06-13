@@ -23,17 +23,6 @@
         android:text="Enter Username"
         android:textColor="#0022ff"
         android:layout_below="@+id/Register" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/EditUSer"
-        android:padding="30sp"
-        android:id="@+id/TV_password"
-        android:text="Enter Password"
-        android:textColor="#0022ff"
-        android:textSize="14sp"
-        android:clickable="true" />
-
     <EditText
         android:id="@+id/Password"
         android:layout_width="match_parent"
@@ -70,14 +59,15 @@
     <TextView
         android:id="@+id/Confirmation"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/checkBox"
         android:layout_centerHorizontal="true"
         android:padding="30sp"
         android:text="confirmation here"
         android:textSize="14sp"
         android:textColor="#0022ff"
-        android:layout_above="@+id/Register_btn" />
+        android:layout_above="@+id/Register_btn"
+        android:isScrollContainer="true"/>
 
 
 </RelativeLayout>

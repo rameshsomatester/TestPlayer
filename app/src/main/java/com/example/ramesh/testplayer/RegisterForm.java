@@ -50,6 +50,9 @@ public class RegisterForm extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 viewusers = dbHandler.viewusers();
+                if (viewusers.contains("Empty"))
+                confirmation.setText("Hola no users in database");
+                else
                 confirmation.setText(viewusers);
                 return true;
             }
@@ -65,7 +68,6 @@ public class RegisterForm extends AppCompatActivity {
         UserName = userName;
         this.password = password;
     }
-
     public void setUserName(String userName) {
         UserName = userName;
     }

@@ -80,20 +80,18 @@ class MyDbHandler(context: Context, name: String, factory: SQLiteDatabase.Cursor
 
         if (c == null) {
             return "Empty"
-        } else
+        } else {
+
             viewdata = " Username    " + " Password  \n"
-        do {
-            for (i in 0..c.columnCount - 1) {
+            do {
+                viewdata += c.getString(c.getColumnIndex("Username")) + "      " + c.getString(c.getColumnIndex("Password"))
+                viewdata += "\n"
+            } while (c.moveToNext())
 
-                Log.e("test", " data " + c.getString(i))
-            }
-            viewdata += c.getString(c.getColumnIndex("Username")) + "      " + c.getString(c.getColumnIndex("Password"))
-            viewdata += "\n"
-        } while (c.moveToNext())
-
-        //    }
-        db.close()
-        return viewdata
+            //    }
+            db.close()
+            return viewdata
+        }
     }
 
     companion object {

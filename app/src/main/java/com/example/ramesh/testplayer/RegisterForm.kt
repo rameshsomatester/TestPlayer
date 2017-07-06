@@ -1,6 +1,8 @@
 package com.example.ramesh.testplayer
 
 import android.content.Intent
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -36,7 +38,7 @@ class RegisterForm : AppCompatActivity {
         Register = findViewById(R.id.Register_btn) as Button
         confirmation = findViewById(R.id.Confirmation) as TextView
         agree = findViewById(R.id.checkBox) as CheckBox
-        dbHandler = MyDbHandler(this, null, null, 1)
+        dbHandler = MyDbHandler(this,"db", null, 1)
         Register.setOnClickListener {
             val test = RegisterForm(Username.text.toString(), Password.text.toString())
             dbHandler.addUser(test)
@@ -53,9 +55,7 @@ class RegisterForm : AppCompatActivity {
 
     }
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(userName: String, password: String) {
         this.userName = userName

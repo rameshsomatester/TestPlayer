@@ -77,22 +77,23 @@ class MyDbHandler(context: Context, name: String, factory: SQLiteDatabase.Cursor
         }*/
 
         //c.moveToFirst();
-
-        if (c == null) {
+        if (c==null || c.isAfterLast)
             return "Empty"
-        } else {
-
-            viewdata = " Username    " + " Password  \n"
-            do {
-                viewdata += c.getString(c.getColumnIndex("Username")) + "      " + c.getString(c.getColumnIndex("Password"))
-                viewdata += "\n"
-            } while (c.moveToNext())
-
-            //    }
+        else {
+            if (c.moveToFirst()) {
+                while (!c.isAfterLast()) {
+                    viewdata = " Username    " + " Password  \n"
+                    viewdata += c.getString(c.getColumnIndex("Username")) + "      " + c.getString(c.getColumnIndex("Password"))
+                    viewdata += "\n"
+                    c.moveToNext()
+                }
+            }
+            c.close()
             db.close()
             return viewdata
         }
     }
+
 
     companion object {
         private val DATABASE_VERSION = 1

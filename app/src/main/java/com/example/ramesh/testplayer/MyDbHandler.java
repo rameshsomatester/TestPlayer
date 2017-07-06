@@ -87,23 +87,22 @@ public class MyDbHandler extends SQLiteOpenHelper{
 
         //c.moveToFirst();
 
-        if (c == null) {
+        if (c == null || c.isAfterLast()) {
             return "Empty";
         }
-        else
-            viewdata = " Username    " + " Password  \n";
-        do {
-            for (int i = 0; i < c.getColumnCount(); i++) {
-
-                Log.e("test", " data " + c.getString(i));
+        else {
+            if (c.moveToFirst()) {
+                while (!c.isAfterLast()) {
+                    viewdata = " Username    " + " Password  \n";
+                    viewdata += c.getString(c.getColumnIndex("Username")) + "      " + c.getString(c.getColumnIndex("Password"));
+                    viewdata += "\n";
+                    c.moveToNext();
+                }
             }
-            viewdata += c.getString(c.getColumnIndex("Username")) +"      "+c.getString(c.getColumnIndex("Password"));
-            viewdata += "\n";
-        }while (c.moveToNext());
-
-    //    }
-        db.close();
-        return viewdata;
+                c.close();
+                db.close();
+            return viewdata;
+        }
     }
 
 

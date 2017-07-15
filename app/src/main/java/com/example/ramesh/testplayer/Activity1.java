@@ -52,8 +52,15 @@ public class Activity1 extends AppCompatActivity {
         OnclickInternet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent internet = new Intent(Activity1.this, InternetContainer.class);
-                startActivity(internet);
+                   Intent internet = new Intent(Activity1.this, InternetContainer.class);
+                if (ContextCompat.checkSelfPermission(Activity1.this,
+                        Manifest.permission.INTERNET)!= PackageManager.PERMISSION_GRANTED)
+                    startActivity(internet);
+                else {
+                    Toast.makeText(getApplicationContext(), "Please check your internet", Toast.LENGTH_SHORT).show();
+                    ActivityCompat.requestPermissions(Activity1.this,new String[]{Manifest.permission.INTERNET},
+                            INTERNET_HANDLER);
+                }
             }
         });
         onclickRegister.setOnClickListener(new View.OnClickListener() {
